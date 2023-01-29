@@ -1,1 +1,84 @@
-<html>Hello</html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heart Catcher</title>
+    <style>
+      /* CSS styles for the game */
+      #game {
+        background-color: rgba(235, 214, 226, 0.728);
+        width: 550px;
+        height: 550px;
+        position: relative;
+        border: 3px solid rgb(155, 51, 96);
+      }
+      .heart {
+        width: 55px;
+        height: 55px;
+        position: absolute;
+        background-image: url('heart.png');
+        background-size: cover;
+      }
+      #h1{
+        color: deeppink;
+        font-family: fantasy;
+      }
+      #score{
+        color: deeppink;
+      }
+      p {
+        color: deeppink;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <h1 id="h1">Heart Catcher</h1>
+    <div id="game"></div>
+    <p>Score: <span id="score">0</span></p>
+    <script>
+      // JavaScript code for the game
+      var game = document.getElementById('game');
+      var score = 0;
+      var hearts = [];
+
+      // Function to create a new heart
+      function createHeart() {
+        var heart = document.createElement('div');
+        heart.classList.add('heart');
+        // Set a random position for the heart
+        heart.style.left = Math.random() * 450 + 'px';
+        heart.style.top = '0px';
+        // Add the heart to the game board
+        game.appendChild(heart);
+        hearts.push(heart);
+      }
+
+      // Call the createHeart function every 1 second
+      setInterval(createHeart, 1000);
+
+      // Function to move the hearts down the screen
+      function moveHearts() {
+        for (var i = 0; i < hearts.length; i++) {
+          hearts[i].style.top = parseInt(hearts[i].style.top) + 5 + 'px';
+        }
+      }
+
+      // Call the moveHearts function every 50 milliseconds
+      setInterval(moveHearts, 50);
+
+      // Function to check for clicks on hearts
+      game.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.classList.contains('heart')) {
+          // Increase the score and update the score display
+          score++;
+          document.getElementById('score').innerHTML = score;
+          // Remove the heart from the game board
+          game.removeChild(target);
+          var index = hearts.indexOf(target);
+          hearts.splice(index, 1);
+        }
+      });
+    </script>
+  </body>
+</html>
